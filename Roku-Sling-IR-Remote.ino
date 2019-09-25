@@ -120,7 +120,7 @@ void loop(){
           }
           else {                    //if channel number entered before *
             sendRemote(HOME);       //Roku home
-            delay(3000);
+            delay(5000);
             sendRemote(RIGHT);      //right to Sling
             sendRemote(OK);         //select Sling
             delay(13000);
