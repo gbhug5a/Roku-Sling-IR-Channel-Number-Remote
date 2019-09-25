@@ -21,6 +21,10 @@ Pressing "#" alone toggles the TV's input mode between antenna and HDMI.
 
 The Arduino is a 3.3V 8MHz Pro Mini with it's voltage regulator and power LED removed. Between entries, it is put into Power_Down sleep mode where it draws 400nA of current. There is no ON/OFF switch.  Also needed are an IR LED (borrow one from any old remote, or order a Vishay TSAL6100 or TSAL6200), an 18650 lithium ion battery with holder and separate charger, and any cheap numeric 4x3 matrix keypad.
 
+The box is a $1 item in the store at Walmart:
+
+https://www.walmart.com/ip/Super-Stacker-Crayon-Box-Assorted-Colors/788805865
+
 The current-limiting resistor for the IR LED will depend on your distance from the Roku and TV, and the characteristics of the IR LED you use.  The resistor should be the highest value that still gives good results.  The picture shows a 22-ohm resistor, but I ended up with 10 ohms as shown in the schematic.
 
 The IRremote library used to generate the IR commands requires the use of digital pin 3 to drive the IR LED. This should drive the base of an NPN Darlington transistor which in turn drives the IR LED.  See the schematic.  You could also use a regular NPN transistor, but the base resistor would need to be a lower value.
