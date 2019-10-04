@@ -177,7 +177,9 @@ void calculate() {
   if (currentChan != targetChan) {
     if (keyCopy != '*') {           //if already watching a channel, get back to MC
       sendRemote(BACK);
+      delay(Interval);
       sendRemote(BACK);
+      delay(Interval);
     }
     for (i=0; i<Moves; i++) {       //perform the scrolling steps
       sendRemote(Direction);
