@@ -1,5 +1,5 @@
 
-/*  Roku-Sling IR Channel Number Remote  */
+/*  Roku-Sling IR Channel Number Remote v2.0 */
 
 #include <Keypad.h>
 #include <IRremote.h>
@@ -33,8 +33,8 @@ unsigned long Direction = 0;        // will equal RIGHT or LEFT, depending
 
 const byte ROWS = 4;                //four rows
 const byte COLS = 3;                //three columns
-byte rowPins[ROWS] = {4, 5, 6, 7};  //row pinouts of the keypad - don't change these
-byte colPins[COLS] = {2, 8, 9};     //column pinouts of the keypad
+byte rowPins[ROWS] = {4, 5, 6, 7};  //row pins of the keypad - all Port D - don't change
+byte colPins[COLS] = {2, 8, 9};     //column pins of the keypad
 byte PCIenable = 4;                 //pin change interrupt for Port D - for PCICR register
 byte PCImask = 0xF0;                //bits 4, 5, 6, and 7 of Port D - for PCMSK2 register
 
@@ -60,8 +60,7 @@ void setup(){
     pinMode(i,OUTPUT);
   }
   for (r = 0; r < ROWS; r++) {        // the ROW pins will generate pin change interrupts
-    digitalWrite(rowPins[r],HIGH);
-    pinMode(rowPins[r],INPUT_PULLUP);
+    pinMode(rowPins[r],INPUT_PULLUP); //   to wake the MCU, then sense key press in getKey()
   }
   ADCSRA = 0;                         // disable ADC for power saving
   wdt_disable();                      // disable WDT for power saving
@@ -80,18 +79,14 @@ void loop(){
   set_sleep_mode (SLEEP_MODE_PWR_DOWN); // Deep sleep
   sleep_enable();
   sleep_bod_disable();                // disable brownout detector during sleep
-  sleep_cpu();
+  sleep_cpu();                        // now go to sleep
 
   //  *WAKE UP* from pressing any key
 
   for (c = 0; c < COLS; c++) {        // all columns back to INPUT - for getKey function
-    digitalWrite(colPins[c],HIGH);
-    pinMode(colPins[c],INPUT);
+    pinMode(colPins[c],INPUT);        //   getKey takes one at a time OUTPUT LOW
   }
-  for (r = 0; r < ROWS; r++) {        // the ROW pins will generate pin change interrupts
-    digitalWrite(rowPins[r],HIGH);
-    pinMode(rowPins[r],INPUT_PULLUP);
-  }
+
   channelNum = 0;
   keyTime = millis();                 // in case no key actually pressed, or too short
   keyCopy = 0;
