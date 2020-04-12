@@ -1,5 +1,6 @@
 
-/*  Roku-Sling IR Channel Number Remote v2.0 */
+/*  Roku-Sling IR Channel Number Remote v3.0
+    Arduino Pro Mini - 3.3V, 8MHz */
 
 #include <Keypad.h>
 #include <IRremote.h>
@@ -8,13 +9,13 @@
 
 IRsend irsend;
 
-const int totChans = 20;        // total number of channels in My Channels ("MC")
-const int maxMoves = 10;        // if Moves greater than this, go the other way.
-const byte Channel [totChans]={35,48,29,47,34,45,28,55,148,31,56,46,60,58,59,30,129,41,45,49};
+const int totChans = 24;        // total number of channels in My Channels ("MC")
+const int maxMoves = 12;        // if Moves greater than this, go the other way.
+const byte Channel [totChans]={35,48,29,47,34,45,39,28,55,148,31,56,46,60,58,59,30,129,41,52,49,70,72,71};
 int  currentChan = 0;           // the position of the current playing channel on the MC line
 int  targetChan = 0;            // the position of the target channel on the MC line
 int Moves = 0;                  // # of RiGHT or LEFT moves to the new channel
-const int Interval = 400;       // interval between IR commands, in milliseconds
+const int Interval = 500;       // interval between IR commands, in milliseconds
 
 const unsigned long HOME = 0x5743C03F;    // the Roku IR codes for these buttons
 const unsigned long BACK = 0x57436699;
@@ -118,7 +119,7 @@ void loop(){
             delay(5000);
             sendRemote(RIGHT);      //right to Sling
             sendRemote(OK);         //select Sling
-            delay(13000);
+            delay(15000);
             sendRemote(DOWN);       //down to My Channels line
             currentChan = 0;        //entry point is FX
             calculate();            //calculate and perform steps to new channel
@@ -173,7 +174,7 @@ void calculate() {
     if (keyCopy != '*') {           //if already watching a channel, get back to MC
       sendRemote(BACK);
       delay(Interval);
-      sendRemote(BACK);
+//      sendRemote(BACK);
       delay(Interval);
     }
     for (i=0; i<Moves; i++) {       //perform the scrolling steps
