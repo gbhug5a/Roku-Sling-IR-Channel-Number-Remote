@@ -1,6 +1,9 @@
 # ROKU-SLING IR CHANNEL-NUMBER REMOTE for ARDUINO
 
 
+NOTE:  Sling has now rearranged everything, so this project no longer works.  But I'm going to leave it up as an example of how this kind of thing can be done.  Also, IRremote.h has also been modifed.  This code used v2.8.0, and no longer works on the latest versions.
+
+
 After cutting the cord and signing up for Sling TV on Roku, I missed being able to get to a channel by entering its number on a remote. I disliked having to scroll to the desired channel, particularly since I had trouble seeing the channel icons on my small TV.
 
 So I built this IR remote which lets me enter the Cox Cable channel numbers, which I know very well, to get to the channels I want to watch.  I put all the channels I might ever want to watch on Sling's "My Channels" list. That list remains unchanged unless I change it. The corresponding Cox channel numbers are entered in the sketch in the "Channel" array in exactly the same order. The firmware finds a match for the channel number entered on the keypad, and automatically scrolls to that channel based on its position in the array, which is the same as its position on the My Channels line.
